@@ -1,8 +1,14 @@
-const dataDeNascimento = document.querySelector('#nascimento')
+export function valida(input) {
+    const tipoDeInput = input.dataset.tipo
 
-dataDeNascimento.addEventListener('blur', (evento) => {
-    validaDataNascimento(evento.target)
-})
+    if(validadores[tipoDeInput]) {
+        validadores[tipoDeInput](input)
+    }
+}
+
+const validadores = {
+    dataNascimento: input => validaDataNascimento(input)
+}
 
 function validaDataNascimento(input) {
     const dataRecebida = new Date(input.value)
