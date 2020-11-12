@@ -4,6 +4,31 @@ export function valida(input) {
     if(validadores[tipoDeInput]) {
         validadores[tipoDeInput](input)
     }
+
+    if(input.validity.valid) {
+        input.closest('.input-container').classList.remove('input-container--invalido')
+    } else {
+        input.closest('.input-container').classList.add('input-container--invalido')
+    }
+}
+
+const mensagensDeErro = {
+    nome: {
+        valueMissing: 'O nome não pode estar vazio'
+    },
+    email: {
+        valueMissing: 'O email não pode estar vazio',
+        typeMismatch: 'O email digitado não é válido'
+    },
+    senha: {
+        valueMissing: 'A senha não pode estar vazia',
+        tooShort: 'A senha é muito curta',
+        patternMismatch: 'A senha deve conter entre 6 e 12 caractéres e deve conter um número e uma letra maiúscula'
+    },
+    dataNascimento: {
+        valueMissing: 'A data não pode estar vazia',
+        customError: 'Você deve ser maior de 18 anos para se cadastrar'
+    }
 }
 
 const validadores = {
