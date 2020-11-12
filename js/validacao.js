@@ -7,10 +7,20 @@ export function valida(input) {
 
     if(input.validity.valid) {
         input.closest('.input-container').classList.remove('input-container--invalido')
+        input.closest('.input-container').querySelector('span').innerHTML = ''
     } else {
         input.closest('.input-container').classList.add('input-container--invalido')
+        input.closest('.input-container').querySelector('span').innerHTML = pegaMensagemDeErro(tipoDeInput, input)
     }
 }
+
+const tiposDeErro = [
+    'valueMissing',
+    'typeMismatch',
+    'tooShort',
+    'patternMismatch',
+    'customError'
+]
 
 const mensagensDeErro = {
     nome: {
@@ -33,6 +43,17 @@ const mensagensDeErro = {
 
 const validadores = {
     dataNascimento: input => validaDataNascimento(input)
+}
+
+function pegaMensagemDeErro(tipoDeInput, input) {
+    let mensagem = ''
+    tiposDeErro.forEach( erro => {
+        if(input.validity[erro]) {
+            mensagem = mensagensDeErro[tipoDeInput][erro]
+        }
+    })
+    
+    return mensagem
 }
 
 function validaDataNascimento(input) {
